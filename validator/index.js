@@ -1,0 +1,1 @@
+module.exports.userIdEq = require('./userIdEq')
