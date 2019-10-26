@@ -10,7 +10,10 @@ module.exports = async (req, res) => {
     const UserToCreate = req.body;
     //const UserModel = dataBase.getModel('User');
 
-    const [photo] = req.photos;
+    //await UserModel.create(UserToCreate);
+    const { id } = await userService.createUser(UserToCreate);
+    
+    const [photo] = req.photo;
     const appRoot = global.appRoot;
 
     const photoDir = `user/${id}/photo`;
@@ -25,11 +28,8 @@ module.exports = async (req, res) => {
 
     await userService.updateUserService(
       { photo_path: `${photoDir}/${photoName}` } //tr
-      
     );
 
-    //await UserModel.create(UserToCreate);
-    await userService.createUser(UserToCreate);
     //email sender service
     await emailService.sendEmail(UserToCreate.email);
 

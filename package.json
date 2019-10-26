@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^12.11.6",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6-alpha.5",
     "express-handlebars": "^3.1.0",
@@ -19,6 +20,8 @@
     "nodemailer": "^6.3.1",
     "pass": "^0.2.0",
     "sequelize": "^5.19.6",
+    "socket.io": "^2.3.0",
+    "typescript": "^3.6.4",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
@@ -31,6 +34,5 @@
     "@types/express-fileupload": "1.1.0",
     "@types/uuid": "3.4.5",
     "@types/fs-extra": "8.0.1"
-    
   }
 }

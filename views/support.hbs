@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Support Chat</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        #message-container {
+            width: 80%;
+            max-width: 1200px;
+        }
+
+        #message-container div {
+            background-color: rgb(137, 196, 191);
+            padding: 5px;
+        }
+
+        #message-container div:nth-child(2n) {
+            background-color: #FFF;
+        }
+
+        #send-container {
+            position: fixed;
+            padding-bottom: 30px;
+            bottom: 0;
+            background-color: white;
+            max-width: 1200px;
+            width: 80%;
+            display: flex;
+        }
+
+        #message-input {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <div id="message-container"></div>
+    <form id="send-container">
+    <input type="text" id="message-input" autocomplete="off">
+    <button type="submit" id="send-button">Send</button>
+    </form>
+    <script>
+    const socket = io();
+    const messageContainer = document.getElementById('message-container')
+    const messageForm = document.getElementById('send-container')
+    const messageInput = document.getElementById('message-input')
+    
+
+    const userName = prompt('What is your name?')
+    appendMessage('You joined')
+    socket.emit('new-user', userName)
+
+    socket.on('chat-message', data => {
+        appendMessage(`${data.name}: ${data.message}`)
+    })
+    socket.on('user-connected', userName => {
+        appendMessage(`${userName} connected channel`)
+    })
+    socket.on('user-disconnected', userName => {
+        appendMessage(`${userName} disconnected channel`)
+    })
+    
+    messageForm.addEventListener('submit', event =>{
+        event.preventDefault() //Не дає перезавантажувати сторінку автоматично, аби не втрачати усі повідомлення
+        const message = messageInput.value 
+        appendMessage(`You: ${message}`)
+        socket.emit('send-chat-message', message)
+        messageInput.value = ''
+    })
+     function appendMessage (message) {
+        const messageElement = document.createElement('div')
+        messageElement.innerText = message
+        messageContainer.append(messageElement)
+    }
+    
+    socket.emit('joinChannel','Support')
+    socket.on('newUser', (res) => console.log(res))
+    socket.on('err', (err) => console.log(err))
+    socket.on('Welcome to support', (res) => console.log(res))
+
+    </script>
+    
+</body>
+
+</html>

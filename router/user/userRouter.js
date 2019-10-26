@@ -8,6 +8,8 @@ const {
 
 const { User } = require("../../controllers");
 
+
+
 router.post(
   "/",
   User.createUser,

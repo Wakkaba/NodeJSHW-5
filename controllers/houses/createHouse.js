@@ -1,10 +1,7 @@
 //const dataBase = require('../../dataBase').getInstance();
 const { houseService, photoService } = require("../../services");
-
 const fs = require("fs-extra");
-
 const { resolve } = require("path");
-
 const uuid = require("uuid").v1();
 
 module.exports = async (req, res) => {
@@ -12,11 +9,8 @@ module.exports = async (req, res) => {
     const HouseToCreate = req.body;
     //const HouseModel = dataBase.getModel('House');
     const userID = req.user.id;
-    
     const photos = req.photos;
-    
     const appRoot = global.appRoot;
-
     const photoDir = `house/${id}/photo`;
 
      fs.mkdirSync(resolve(appRoot, "public", photoDir), {
